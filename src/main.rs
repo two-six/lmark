@@ -2,14 +2,22 @@ mod parser;
 
 use std::collections::HashMap;
 
-use comrak::{markdown_to_html, ComrakOptions};
-
 fn main() {
-    println!(
-        "{}",
-        markdown_to_html("Hello, **世界**!", &ComrakOptions::default())
-    );
-    println!("{}", parser::parse()["another text"].0);
+    let mut categories = Vec::new();
+    categories.push(HashMap::from([
+        (
+            "Expense::Grocery::Walmart".to_uppercase().to_owned(),
+            HashMap::from([
+                ("EUR".to_uppercase().to_owned(), 107.25),
+                ("USD".to_uppercase().to_owned(), 20.3),
+            ]),
+        ),
+        (
+            "Assets::Bank::Bank of america".to_uppercase().to_owned(),
+            HashMap::from([("USD".to_uppercase().to_owned(), 3450.0)]),
+        ),
+    ]));
+    println!("{:#?}", categories);
 }
 
 #[allow(dead_code)]
@@ -20,13 +28,13 @@ fn get_vars(text: &str) -> HashMap<String, HashMap<String, String>> {
     x1
 }
 
-// [category]
-// - [ ] phone - ($300)
+// [category] 16.07.2022
+// - [ ] phone - (300 USD)
 // - [ ]
 // [.]
 //
-//
-//
+// [expenses.phone] - (300 USD)
+// [assets.bank]
 //
 //
 //
