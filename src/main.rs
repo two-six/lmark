@@ -1,5 +1,6 @@
 mod parser;
 
+use regex::Regex;
 use std::collections::HashMap;
 
 fn main() {
@@ -18,6 +19,7 @@ fn main() {
         ),
     ]));
     println!("{:#?}", categories);
+    println!("{}", get_category("[expense.pHoNe.baNk]"));
 }
 
 #[allow(dead_code)]
@@ -26,6 +28,16 @@ fn get_vars(text: &str) -> HashMap<String, HashMap<String, String>> {
     let x2 = HashMap::new();
     x1.insert(text.to_owned(), x2);
     x1
+}
+
+#[allow(dead_code)]
+fn get_category(input: &str) -> String {
+    let reg = Regex::new(r"\[(.+?)\]").unwrap();
+    let mut res = String::from("");
+    for r in reg.captures_iter(input) {
+        res += &r.get(1).unwrap().as_str().to_lowercase();
+    }
+    res
 }
 
 // [category] 16.07.2022
